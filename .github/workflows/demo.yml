@@ -30,9 +30,13 @@ jobs:
         tools: go
         log-level: debug
 
+    - name: Reference
+      run: |
+        bash test.sh "bash demo.sh"
+
     - name: Play
       env:
         CGO_ENABLED: 0
       run: |
         helper/usr/local/bin/go build -o demo ./cmd/demo
-        bash test.sh
+        bash test.sh "./demo"
