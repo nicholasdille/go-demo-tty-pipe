@@ -1,0 +1,42 @@
+name: Playground
+
+on:
+  workflow_dispatch:
+    inputs:
+      docker-setup-version:
+        description: "Version of docker-setup to use"
+        required: true
+        default: "latest"
+      docker-setup-log-level:
+        description: "Log level"
+        required: true
+        default: "info"
+
+jobs:
+
+  release:
+    name: Release
+    needs:
+    - prepare
+    runs-on: ubuntu-22.04
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install docker-setup
+      uses: nicholasdille/docker-setup-action@main
+      with:
+        version: "2.2.56"
+        prefix: helper
+        tools: go
+        log-level: debug
+
+    - name: Play
+      env:
+        CGO_ENABLED: 0
+      run: |
+        helper/usr/local/bin/go build -o demo ./cmd/demo
+        ./demo
+        echo foo | ./demo
+        ./demo </dev/null
