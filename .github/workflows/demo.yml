@@ -35,6 +35,4 @@ jobs:
         CGO_ENABLED: 0
       run: |
         helper/usr/local/bin/go build -o demo ./cmd/demo
-        ./demo
-        echo foo | ./demo
-        ./demo </dev/null
+        bash test.sh
