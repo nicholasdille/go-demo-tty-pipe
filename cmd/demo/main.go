@@ -13,10 +13,17 @@ func main() {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("Mode for Stdin: %v\n", fi.Mode())
-	fmt.Printf("Stdin is a character device: %v\n", fi.Mode()&os.ModeCharDevice != 0)
-	fmt.Printf("Stdin is a named pipe: %v\n", fi.Mode()&os.ModeNamedPipe != 0)
+	fmt.Printf("Mode for Stdin: %032b\n", fi.Mode())
+	fmt.Printf("                %032b\n", os.ModeCharDevice)
+	fmt.Printf("                %032b\n", os.ModeNamedPipe)
+
+	if fi.Mode()&os.ModeCharDevice == os.ModeCharDevice {
+		fmt.Println("Stdin is a character device")
+	}
+	if fi.Mode()&os.ModeNamedPipe == os.ModeNamedPipe {
+		fmt.Println("Stdin is a named pipe")
+	}
 	if isatty.IsTerminal(os.Stdin.Fd()) {
-		fmt.Println("Stdout is a terminal")
+		fmt.Println("Stdin is a terminal")
 	}
 }
