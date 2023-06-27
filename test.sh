@@ -13,3 +13,11 @@ echo
 echo "Running: ${SCRIPT} </dev/null"
 ${SCRIPT} </dev/null
 echo
+
+echo "Running: ${SCRIPT} | cat"
+${SCRIPT} | cat
+echo
+
+echo "Running: ${SCRIPT} >/dev/null"
+${SCRIPT} >/dev/null
+echo
